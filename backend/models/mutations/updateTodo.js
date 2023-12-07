@@ -2,6 +2,8 @@ const graphql = require("graphql");
 const { GraphQLString, GraphQLID, GraphQLBoolean } = graphql;
 const TodoType = require("../types/todoType.js");
 const { todos, users } = require("../../models");
+const { combineResolvers } = require('graphql-resolvers');
+const isAuthenticated = require("../../helpers/authCombineResolvers.js");
 
 const updateTodo = {
     type: TodoType,
@@ -10,7 +12,7 @@ const updateTodo = {
         description: { type: GraphQLString },
         completion: { type: GraphQLBoolean },
     },
-    async resolve(parent, args) {
+    resolve: combineResolvers(isAuthenticated, async (parent, args) => {
         try {
             // Find the todo by ID
             const existingTodo = await todos.findByPk(args.id);
@@ -29,7 +31,7 @@ const updateTodo = {
         } catch (err) {
             throw new Error(`Failed to update todo: ${err.message}`);
         }
-    },
+    }),
 };
 
 module.exports = updateTodo;

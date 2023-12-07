@@ -1,21 +1,17 @@
 const express = require('express')
 const cors = require('cors')
-const { graphqlHTTP } = require("express-graphql");
-const schema = require('./graphql/schema.graphql.js')
 const db = require('./models')
 require('dotenv').config()
+const routes = require('./routes')
+
 const port = process.env.PORT || 8000
+
 const app = express()
 
 app.use(cors({ credentials: true, origin: true }));
+app.use(express.json());
 
-app.use(
-    "/graphql",
-    graphqlHTTP({
-        schema,
-        graphiql: true,
-    })
-)
+routes(app);
 
 db.sequelize.sync().then((req) => {
   app.listen(port, () => {

@@ -2,6 +2,8 @@ const graphql = require("graphql");
 const { GraphQLString, GraphQLID } = graphql;
 const TodoType = require("../types/todoType.js");
 const { todos, users } = require("../../models");
+const isAuthenticated = require("../../helpers/authCombineResolvers.js");
+const { combineResolvers } = require('graphql-resolvers')
 
 const createTodo = {
     type: TodoType,
@@ -9,10 +11,11 @@ const createTodo = {
         description: { type: GraphQLString },
         user_id: { type: GraphQLID }, // Assuming user_id is passed along with description
     },
-    async resolve(parent, args) {
+    resolve: combineResolvers(isAuthenticated, async (parent, args) => {
         try {
             // Find the user by user_id
             const user = await users.findByPk(args.user_id);
+            console.log(user)
 
             if (!user) {
                 throw new Error("User not found");
@@ -33,7 +36,7 @@ const createTodo = {
         } catch (err) {
             throw new Error(`Failed to create todo: ${err.message}`);
         }
-    },
+    })
 };
 
 module.exports = createTodo;
