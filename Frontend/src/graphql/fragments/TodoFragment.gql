@@ -1,0 +1,6 @@
+fragment TodoFragment on Todo {
+    id
+    description
+    completion
+    user_id
+}

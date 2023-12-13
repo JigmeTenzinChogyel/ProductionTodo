@@ -1,0 +1,5 @@
+mutation CreateTodo($id: ID!, $description: String!, $user_id: ID!) {
+  createTodo(id: $id, description: $description, user_id: $user_id) {
+    ...TodoFragment
+  }
+}

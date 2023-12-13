@@ -1,0 +1,5 @@
+query GetTodoDetails($id: ID!) {
+    getTodoDetails(id: $id) {
+        ...TodoFragment
+    }
+}

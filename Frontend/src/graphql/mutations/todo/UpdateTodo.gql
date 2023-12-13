@@ -1,0 +1,5 @@
+mutation UpdateTodo($id: ID!, $description: String!, $completion: Boolean!) {
+  updateTodo(id: $id, description: $description, completion: $completion) {
+    ...TodoFragment
+  }
+}
