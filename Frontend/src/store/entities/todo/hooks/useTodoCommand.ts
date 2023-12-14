@@ -1,10 +1,7 @@
 import { useRecoilCallback } from "recoil";
 import { useUpsert } from "./useUpsert";
 import { todoState, initialState } from "../atom";
-import {
-  useCreateTodoMutation,
-  useGetAllTodoForOneUserLazyQuery
-} from "../../../../graphql/types";
+import { useCreateTodoMutation } from "../../../../graphql/types";
 import { v4 as uuidv4} from "uuid"
 import { useTodoResponse } from "./useTodoResponse";
 

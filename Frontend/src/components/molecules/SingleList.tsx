@@ -16,7 +16,7 @@ const SingleList: React.FC<Props> = ({ todoId, handleEdit, handleDelete, handleS
 
     if (isEdit) {
         return (
-            <div className='p-1 my-1 block w-full rounded-lg'>
+            <div className='p-1 my-2 flex w-full rounded-lg'>
                 <div className='w-full flex items-center justify-between border-b px-5 py-2'>
                     <Tag 
                     label={ todo.description }
@@ -25,7 +25,7 @@ const SingleList: React.FC<Props> = ({ todoId, handleEdit, handleDelete, handleS
                 </div>
                 <CRUDButton 
                     onClick={ handleSave } 
-                    btnLabel='Edit'
+                    btnLabel='Save'
                     btnStyle='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'/>
             </div>
           )

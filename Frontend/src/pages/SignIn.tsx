@@ -3,7 +3,7 @@ import SignInCard from '../components/organisms/forms/SignInCard'
 
 const SignIn: React.FC = () => {
   return (
-    <div>
+    <div className='w-1/4 flex items-center'>
       <SignInCard />
     </div>
   )

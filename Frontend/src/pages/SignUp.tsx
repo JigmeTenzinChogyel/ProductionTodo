@@ -1,8 +1,9 @@
 import React from 'react'
+import Table from '../components/organisms/table/Table'
 
 const SignUp: React.FC = () => {
   return (
-    <div>SignUp</div>
+    <Table />
   )
 }
 

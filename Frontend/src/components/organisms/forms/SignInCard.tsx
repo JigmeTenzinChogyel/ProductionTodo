@@ -48,11 +48,27 @@ const SignInCard: React.FC<Props> = (): React.JSX.Element => {
   }
 
   return (
-    <div className='max-w-md mx-auto p-6 bg-white rounded-md shadow-md flex flex-col justify-center items-start'>
+    <div className='w-full p-6 bg-white rounded-md shadow-md flex flex-col justify-center items-start'>
       <h1 className='text-2xl font-semibold mb-4 w-full text-center'>Sign In</h1>
       <form className='w-full' onSubmit={ handleSubmit }>
-        <StandardInputLabel id='email' label='Email: ' name='email' type='email' placeholder='Email' value={formData.email} onChange={ handleChange } style='mb-2 gap-2 flex flex-col justify-between items-start'/>
-        <StandardInputLabel id='password' label='Password: ' name='password' type='password' placeholder='Password' value={formData.password} onChange={ handleChange } style='mb-2 gap-2 flex flex-col justify-between items-start'/>
+        <StandardInputLabel 
+          id='email' 
+          label='Email: ' 
+          name='email' 
+          type='email' 
+          placeholder='Email' 
+          value={formData.email} 
+          onChange={ handleChange } 
+          style='mb-2 gap-2 flex flex-col justify-between items-start'/>
+        <StandardInputLabel 
+          id='password' 
+          label='Password: ' 
+          name='password' 
+          type='password' 
+          placeholder='Password' 
+          value={formData.password} 
+          onChange={ handleChange } 
+          style='mb-2 gap-2 flex flex-col justify-between items-start'/>
         <AuthButton 
         label='Sign In' 
         style='p-1 border-2 my-2 bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg'/>

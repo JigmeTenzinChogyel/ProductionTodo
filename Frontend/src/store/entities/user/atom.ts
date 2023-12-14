@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 import { CurrentUser } from ".";
-import { createState } from "../../utils/createState";
 
 const key = (str: string) => `src/store/entities/user/${str}`
 

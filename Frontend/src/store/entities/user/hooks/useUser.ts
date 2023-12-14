@@ -8,7 +8,6 @@ import {
 import { CurrentUser, UserSignInType } from "../type";
 import { useTodoResponse } from "../../todo/hooks/useTodoResponse";
 import { userState } from "../atom";
-import { useUserResponse } from "./useUserResponse";
 
 export const useUser = () => {
 

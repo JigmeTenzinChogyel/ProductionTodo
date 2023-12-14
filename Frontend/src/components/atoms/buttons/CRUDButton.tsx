@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface Props {
-  btnLabel?: 'Add' | 'Edit' | 'Delete'; // Use a union type for specific options
+  btnLabel?: 'Add' | 'Edit' | 'Delete' | 'Save'; // Use a union type for specific options
   btnStyle?: string;
   onClick?(): void;
 }

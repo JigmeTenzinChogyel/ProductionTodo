@@ -16,8 +16,16 @@ interface Props {
 const StandardInputLabel: React.FC<Props> = (Props): React.JSX.Element => {
   return (
     <div className={Props.style}>
-      <Label id={Props.id} label={Props.label}/>
-      <Input name={Props.name} type={Props.type} placeholder={Props.placeholder} value={Props.value} onChange={Props.onChange}/>
+      <Label 
+        id={Props.id} 
+        label={Props.label}/>
+      <Input 
+        name={Props.name} 
+        type={Props.type} 
+        placeholder={Props.placeholder} 
+        value={Props.value} 
+        style='border border-gray-300 focus:outline-none focus:border-blue-500 rounded-lg py-2 px-4 block w-full appearance-none leading-normal'
+        onChange={Props.onChange}/>
     </div>
   )
 }

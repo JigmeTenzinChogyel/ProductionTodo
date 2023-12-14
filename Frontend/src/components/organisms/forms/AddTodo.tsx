@@ -18,7 +18,6 @@ const AddTodo: React.FC = (): React.JSX.Element => {
         async (e: React.FormEvent) => {
           e.preventDefault();
           try {
-            console.log(user.id)
             if ( !user.id ) {
               throw new Error("User ID is undefined")
             }
@@ -36,7 +35,7 @@ const AddTodo: React.FC = (): React.JSX.Element => {
             console.error(error);
           }
         },
-        [getCurrentUser] // Add dependencies if needed
+        [getCurrentUser]
       );     
 
   return (
