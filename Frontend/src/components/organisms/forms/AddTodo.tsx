@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import InputButton from '../../molecules/InputButton'
-import { useUser } from '../../../store/entities/user/hooks/useUser'
+import { useUser } from '../../../store/entities/user/hooks/useUser';
 import { useTodoCommand } from '../../../store/entities/todo/hooks/useTodoCommand';
 
 type todoType = string;
@@ -9,7 +9,7 @@ const AddTodo: React.FC = (): React.JSX.Element => {
     const { getCurrentUser } = useUser();
     const { createTodo } = useTodoCommand();
     const [ description, setDescription ] = useState<todoType>('')
-
+    const { user } = useUser();
     const handleChange = ( e: React.ChangeEvent<HTMLInputElement> ) => {
       setDescription(e.target.value)
     }
@@ -18,15 +18,14 @@ const AddTodo: React.FC = (): React.JSX.Element => {
         async (e: React.FormEvent) => {
           e.preventDefault();
           try {
-            const user = await getCurrentUser();
-            const user_id = user?.data?.verifyToken?.id;
-            if ( !user_id ) {
+            console.log(user.id)
+            if ( !user.id ) {
               throw new Error("User ID is undefined")
             }
             try {
               const todoWithUserId = {
                 description,
-                user_id
+                user_id: user.id
               }
               await createTodo( todoWithUserId );
             } catch ( err ) {
