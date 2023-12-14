@@ -1,5 +1,5 @@
-mutation UpdateTodo($id: ID!, $description: String!, $completion: Boolean!) {
-  updateTodo(id: $id, description: $description, completion: $completion) {
+mutation UpdateTodo($id: ID!, $description: String!, $completion: Boolean!, $user_id: ID!) {
+  updateTodo(id: $id, description: $description, completion: $completion, user_id: $user_id) {
     ...TodoFragment
   }
 }

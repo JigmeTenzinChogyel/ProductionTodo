@@ -1,36 +1,43 @@
-// import { useRecoilCallback } from "recoil";
-// import { useUpsert } from "./useUpsert";
-// import { useGetAllTodoForOneUserLazyQuery } from "../../../../graphql/types";
+import { useRecoilCallback, useRecoilValue } from "recoil";
+import { Todo } from "../type"
+import { useUpsert } from "./useUpsert"
+import { todoState } from "../atom";
+import { useUpdateTodoMutation } from "../../../../graphql/types";
 
-// export const useTodo = (user_id: string) => {
-//   const { upsert } = useUpsert();
+export const useTodo = (todoId: string) => {
 
-//   const [ getAllTodoForOneUserQuery ] = useGetAllTodoForOneUserLazyQuery({
-//     variables: {
-//       id: user_id,
-//     },
-//   });
+  const storedToken = localStorage.getItem("token");
+  const { upsert } = useUpsert();
+  const [ updateTodoMutation ] = useUpdateTodoMutation();
+  const todo = useRecoilValue(todoState(todoId));
 
-//   const setTodo = useRecoilCallback(
-//     () => async () => {
-//       const { data, error } = await getAllTodoForOneUserQuery();
-//       const res = data?.getAllTodoForOneUser;
-
-//       if (error) {
-//         throw new Error(`${error}`);
-//       } else {
-//         if (Array.isArray(res)) {
-//           // Iterate through the array and upsert each contact
-//           res.forEach((todo) => upsert({ ...todo }));
-//         } else {
-//           console.error("Unexpected data format:", data);
-//         }
-//       }
-//     },
-//     [upsert, getAllTodoForOneUserQuery, user_id]
-//   );
-
-//   return {
-//     setTodo,
-//   };
-// };
+  const setTodo = useRecoilCallback(
+    ({ snapshot }) =>
+    async (input: Todo) => {
+      const prev = await snapshot.getPromise(
+        todoState(todoId),
+      )
+      upsert({ ...prev, ...input });
+      const res = await updateTodoMutation({
+        variables: {
+          ...input
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${storedToken}`,
+          },
+        },
+      });
+      if (res.errors) upsert(prev)
+    },
+  [
+    todoId,
+    updateTodoMutation,
+    upsert,
+  ],
+  )
+  return {
+    todo,
+    setTodo,
+  }
+}

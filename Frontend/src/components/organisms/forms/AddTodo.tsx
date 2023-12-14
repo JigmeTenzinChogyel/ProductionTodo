@@ -1,14 +1,13 @@
 import React, { useCallback, useState } from 'react'
 import InputButton from '../../molecules/InputButton'
 import { useUser } from '../../../store/entities/user/hooks/useUser'
-import { useCreateTodo } from '../../../store/entities/todo/hooks/useCreateTodo';
-import { v4 as uuidv4 } from 'uuid';
+import { useTodoCommand } from '../../../store/entities/todo/hooks/useTodoCommand';
 
 type todoType = string;
 
 const AddTodo: React.FC = (): React.JSX.Element => {
     const { getCurrentUser } = useUser();
-    const { createTodo } = useCreateTodo();
+    const { createTodo } = useTodoCommand();
     const [ description, setDescription ] = useState<todoType>('')
 
     const handleChange = ( e: React.ChangeEvent<HTMLInputElement> ) => {
@@ -27,11 +26,10 @@ const AddTodo: React.FC = (): React.JSX.Element => {
             }
             try {
               const todoWithUserId = {
-                id: uuidv4(), 
                 description,
                 user_id
               }
-              await createTodo({todo: todoWithUserId});
+              await createTodo( todoWithUserId );
             } catch ( err ) {
               throw new Error(`Error creating todo: ${err}`)
             }

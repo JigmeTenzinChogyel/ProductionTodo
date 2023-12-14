@@ -1,5 +1,3 @@
 mutation DeleteTodo($id: ID!) {
-  deleteTodo(id: $id) {
-    ...TodoFragment
-  }
+  deleteTodo(id: $id)
 }

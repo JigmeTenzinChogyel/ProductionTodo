@@ -21,7 +21,8 @@ export type Mutation = {
   __typename?: 'Mutation';
   createTodo?: Maybe<Todo>;
   createUser?: Maybe<User>;
-  deleteTodo?: Maybe<Todo>;
+  deleteTodo?: Maybe<Scalars['String']['output']>;
+  deleteUser?: Maybe<Scalars['String']['output']>;
   signInUser?: Maybe<SignInUserResponse>;
   updateTodo?: Maybe<Todo>;
 };
@@ -46,6 +47,11 @@ export type MutationDeleteTodoArgs = {
 };
 
 
+export type MutationDeleteUserArgs = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
 export type MutationSignInUserArgs = {
   email?: InputMaybe<Scalars['String']['input']>;
   password?: InputMaybe<Scalars['String']['input']>;
@@ -56,6 +62,7 @@ export type MutationUpdateTodoArgs = {
   completion?: InputMaybe<Scalars['Boolean']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   id?: InputMaybe<Scalars['ID']['input']>;
+  user_id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type RootQueryType = {
@@ -90,7 +97,7 @@ export type SignInUserResponse = {
 
 export type Todo = {
   __typename?: 'Todo';
-  completion?: Maybe<Scalars['Boolean']['output']>;
+  completion: Scalars['Boolean']['output'];
   description: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   user_id: Scalars['ID']['output'];
@@ -103,7 +110,7 @@ export type User = {
   name?: Maybe<Scalars['String']['output']>;
 };
 
-export type TodoFragmentFragment = { __typename?: 'Todo', id: string, description: string, completion?: boolean | null, user_id: string };
+export type TodoFragmentFragment = { __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string };
 
 export type UserFragmentFragment = { __typename?: 'User', id: string, name?: string | null, email: string };
 
@@ -114,23 +121,24 @@ export type CreateTodoMutationVariables = Exact<{
 }>;
 
 
-export type CreateTodoMutation = { __typename?: 'Mutation', createTodo?: { __typename?: 'Todo', id: string, description: string, completion?: boolean | null, user_id: string } | null };
+export type CreateTodoMutation = { __typename?: 'Mutation', createTodo?: { __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null };
 
 export type DeleteTodoMutationVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo?: { __typename?: 'Todo', id: string, description: string, completion?: boolean | null, user_id: string } | null };
+export type DeleteTodoMutation = { __typename?: 'Mutation', deleteTodo?: string | null };
 
 export type UpdateTodoMutationVariables = Exact<{
   id: Scalars['ID']['input'];
   description: Scalars['String']['input'];
   completion: Scalars['Boolean']['input'];
+  user_id: Scalars['ID']['input'];
 }>;
 
 
-export type UpdateTodoMutation = { __typename?: 'Mutation', updateTodo?: { __typename?: 'Todo', id: string, description: string, completion?: boolean | null, user_id: string } | null };
+export type UpdateTodoMutation = { __typename?: 'Mutation', updateTodo?: { __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null };
 
 export type SignUpMutationVariables = Exact<{
   name: Scalars['String']['input'];
@@ -152,21 +160,21 @@ export type SignInUserMutation = { __typename?: 'Mutation', signInUser?: { __typ
 export type GetAllTodoQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllTodoQuery = { __typename?: 'RootQueryType', getAllTodo?: Array<{ __typename?: 'Todo', id: string, description: string, completion?: boolean | null, user_id: string } | null> | null };
+export type GetAllTodoQuery = { __typename?: 'RootQueryType', getAllTodo?: Array<{ __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null> | null };
 
 export type GetAllTodoForOneUserQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetAllTodoForOneUserQuery = { __typename?: 'RootQueryType', getAllTodoForOneUser?: Array<{ __typename?: 'Todo', id: string, description: string, completion?: boolean | null, user_id: string } | null> | null };
+export type GetAllTodoForOneUserQuery = { __typename?: 'RootQueryType', getAllTodoForOneUser?: Array<{ __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null> | null };
 
 export type GetTodoDetailsQueryVariables = Exact<{
   id: Scalars['ID']['input'];
 }>;
 
 
-export type GetTodoDetailsQuery = { __typename?: 'RootQueryType', getTodoDetails?: { __typename?: 'Todo', id: string, description: string, completion?: boolean | null, user_id: string } | null };
+export type GetTodoDetailsQuery = { __typename?: 'RootQueryType', getTodoDetails?: { __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null };
 
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -232,11 +240,9 @@ export type CreateTodoMutationResult = Apollo.MutationResult<CreateTodoMutation>
 export type CreateTodoMutationOptions = Apollo.BaseMutationOptions<CreateTodoMutation, CreateTodoMutationVariables>;
 export const DeleteTodoDocument = gql`
     mutation DeleteTodo($id: ID!) {
-  deleteTodo(id: $id) {
-    ...TodoFragment
-  }
+  deleteTodo(id: $id)
 }
-    ${TodoFragmentFragmentDoc}`;
+    `;
 export type DeleteTodoMutationFn = Apollo.MutationFunction<DeleteTodoMutation, DeleteTodoMutationVariables>;
 
 /**
@@ -264,8 +270,13 @@ export type DeleteTodoMutationHookResult = ReturnType<typeof useDeleteTodoMutati
 export type DeleteTodoMutationResult = Apollo.MutationResult<DeleteTodoMutation>;
 export type DeleteTodoMutationOptions = Apollo.BaseMutationOptions<DeleteTodoMutation, DeleteTodoMutationVariables>;
 export const UpdateTodoDocument = gql`
-    mutation UpdateTodo($id: ID!, $description: String!, $completion: Boolean!) {
-  updateTodo(id: $id, description: $description, completion: $completion) {
+    mutation UpdateTodo($id: ID!, $description: String!, $completion: Boolean!, $user_id: ID!) {
+  updateTodo(
+    id: $id
+    description: $description
+    completion: $completion
+    user_id: $user_id
+  ) {
     ...TodoFragment
   }
 }
@@ -288,6 +299,7 @@ export type UpdateTodoMutationFn = Apollo.MutationFunction<UpdateTodoMutation, U
  *      id: // value for 'id'
  *      description: // value for 'description'
  *      completion: // value for 'completion'
+ *      user_id: // value for 'user_id'
  *   },
  * });
  */
