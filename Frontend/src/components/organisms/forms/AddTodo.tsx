@@ -6,7 +6,6 @@ import { useTodoCommand } from '../../../store/entities/todo/hooks/useTodoComman
 type todoType = string;
 
 const AddTodo: React.FC = (): React.JSX.Element => {
-    const { getCurrentUser } = useUser();
     const { createTodo } = useTodoCommand();
     const [ description, setDescription ] = useState<todoType>('')
     const { user } = useUser();
@@ -35,7 +34,7 @@ const AddTodo: React.FC = (): React.JSX.Element => {
             console.error(error);
           }
         },
-        [getCurrentUser]
+        [user]
       );     
 
   return (
