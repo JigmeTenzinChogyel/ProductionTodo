@@ -3,6 +3,7 @@ import type {
     UserResponse 
 } from "../../../graphql/types/user";
 
+export type { UserResponse}
 export type {
     SignUpMutation,
     SignInUserMutation,
@@ -12,6 +13,5 @@ export type {
     VerifyTokenQueryVariables,
 } from "../../../graphql/types/user"
 
-export type CurrentUser = UserResponse;
+export type CurrentUser = Omit<UserResponse,'todos'>
 export type UserSignInType = SignInUserMutationVariables;
-

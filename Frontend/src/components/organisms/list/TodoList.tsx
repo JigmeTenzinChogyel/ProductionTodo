@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import SingleList from '../../molecules/SingleList'
 import { useUser } from '../../../store/entities/user/hooks/useUser';
+import { useTodoIdsByUserId } from '../../../store/entities/todo/hooks';
 
 type isEditType = boolean;
 
@@ -38,7 +39,9 @@ const getAllTodo = [
   ]
 const TodoList:React.FC = ():React.JSX.Element => {
   
-  const { getCurrentUser } = useUser();
+  const { user } = useUser();
+  const {todoIds} = useTodoIdsByUserId(user.id);
+  console.log(todoIds, "todoids");
   const [ isEdit, setIsEdit ] = useState<isEditType>(false)
 
     const handleDelete = (id: string) => {
@@ -46,15 +49,15 @@ const TodoList:React.FC = ():React.JSX.Element => {
     }
 
   return (
-    <div>
+    <div className='h-2/3 w-3/4 '>
         {
-            getAllTodo.map( todo => 
-            <SingleList 
-                key={todo.id} 
-                label={todo.description}
-                handleDelete={() => handleDelete(todo.id) }
-                isEdit={ isEdit } 
-                />)
+          todoIds.map( id => 
+          <SingleList 
+              key={id} 
+              todoId={id}
+              handleDelete={() => handleDelete(id) }
+              isEdit={ isEdit } 
+              />)
         }
     </div>
   )

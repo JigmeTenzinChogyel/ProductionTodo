@@ -20,7 +20,6 @@ const AddTodo: React.FC = (): React.JSX.Element => {
           try {
             const user = await getCurrentUser();
             const user_id = user?.data?.verifyToken?.id;
-            console.log(user_id)
             if ( !user_id ) {
               throw new Error("User ID is undefined")
             }
@@ -44,12 +43,12 @@ const AddTodo: React.FC = (): React.JSX.Element => {
   return (
     <form 
         onSubmit={ handleSubmit }
-        className=''>
-        <h3 className='text-7xl font-semibold'>Todos</h3>
+        className=' flex w-full flex-col items-center gap-5 p-5'>
+        <h3 className='text-3xl font-semibold'>Add your TODOS!</h3>
         <InputButton
             name='todo'
             type='text'
-            style="w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500"
+            style="w-1/2 px-5 py-1 border rounded-md focus:outline-none focus:border-blue-500"
             placeholder='create todo'
             value={ description }
             onChange={ handleChange }

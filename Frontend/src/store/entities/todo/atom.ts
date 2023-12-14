@@ -13,7 +13,8 @@ export const initialState = (): Todo => ({
   
   export const { 
     state: todoState, 
-    listState: todosState 
+    listState: todosState ,
+    idsState: todoIdsState
   } = createState({ key, initialState });
   
   export const TodoByUserIdState = selectorFamily<Todo[], string>({
@@ -25,4 +26,15 @@ export const initialState = (): Todo => ({
         return todo.filter((todo) => todo.id === user_id);
       },
   });
+
+  export const TodoIdsByUserIdState = selectorFamily<string[], string>({
+    key: key("TodoIdsByUserIdState"),
+    get:
+      (user_id) =>
+      ({ get }) => {
+        const todo = get(todosState);
+        return todo.filter((todo) => todo.user_id === user_id).map((todo) => todo.id);
+      },
+  });
+  
   

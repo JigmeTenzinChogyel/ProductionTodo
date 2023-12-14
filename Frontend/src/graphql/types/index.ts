@@ -108,11 +108,12 @@ export type User = {
   email: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
+  todos?: Maybe<Array<Maybe<Todo>>>;
 };
 
 export type TodoFragmentFragment = { __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string };
 
-export type UserFragmentFragment = { __typename?: 'User', id: string, name?: string | null, email: string };
+export type UserFragmentFragment = { __typename?: 'User', id: string, name?: string | null, email: string, todos?: Array<{ __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null> | null };
 
 export type CreateTodoMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -147,7 +148,7 @@ export type SignUpMutationVariables = Exact<{
 }>;
 
 
-export type SignUpMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id: string, name?: string | null, email: string } | null };
+export type SignUpMutation = { __typename?: 'Mutation', createUser?: { __typename?: 'User', id: string, name?: string | null, email: string, todos?: Array<{ __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null> | null } | null };
 
 export type SignInUserMutationVariables = Exact<{
   email: Scalars['String']['input'];
@@ -155,7 +156,7 @@ export type SignInUserMutationVariables = Exact<{
 }>;
 
 
-export type SignInUserMutation = { __typename?: 'Mutation', signInUser?: { __typename?: 'SignInUserResponse', token?: string | null, user?: { __typename?: 'User', id: string, name?: string | null, email: string } | null } | null };
+export type SignInUserMutation = { __typename?: 'Mutation', signInUser?: { __typename?: 'SignInUserResponse', token?: string | null, user?: { __typename?: 'User', id: string, name?: string | null, email: string, todos?: Array<{ __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null> | null } | null } | null };
 
 export type GetAllTodoQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -179,14 +180,14 @@ export type GetTodoDetailsQuery = { __typename?: 'RootQueryType', getTodoDetails
 export type GetAllUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllUsersQuery = { __typename?: 'RootQueryType', getAllUser?: Array<{ __typename?: 'User', id: string, name?: string | null, email: string } | null> | null };
+export type GetAllUsersQuery = { __typename?: 'RootQueryType', getAllUser?: Array<{ __typename?: 'User', id: string, name?: string | null, email: string, todos?: Array<{ __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null> | null } | null> | null };
 
 export type VerifyTokenQueryVariables = Exact<{
   token: Scalars['String']['input'];
 }>;
 
 
-export type VerifyTokenQuery = { __typename?: 'RootQueryType', verifyToken?: { __typename?: 'User', id: string, name?: string | null, email: string } | null };
+export type VerifyTokenQuery = { __typename?: 'RootQueryType', verifyToken?: { __typename?: 'User', id: string, name?: string | null, email: string, todos?: Array<{ __typename?: 'Todo', id: string, description: string, completion: boolean, user_id: string } | null> | null } | null };
 
 export const TodoFragmentFragmentDoc = gql`
     fragment TodoFragment on Todo {
@@ -201,8 +202,11 @@ export const UserFragmentFragmentDoc = gql`
   id
   name
   email
+  todos {
+    ...TodoFragment
+  }
 }
-    `;
+    ${TodoFragmentFragmentDoc}`;
 export const CreateTodoDocument = gql`
     mutation CreateTodo($id: ID!, $description: String!, $user_id: ID!) {
   createTodo(id: $id, description: $description, user_id: $user_id) {

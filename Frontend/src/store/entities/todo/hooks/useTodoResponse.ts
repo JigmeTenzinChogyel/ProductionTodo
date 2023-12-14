@@ -8,7 +8,6 @@ export const useTodoResponse = () => {
         ({ set }) => (
             data: Data[]
         ) => {
-            console.log(data)
             data.forEach((d) => {
                 set(todoState(d.id), (prev) => {
                     return {

@@ -59,7 +59,6 @@ export const useTodoCommand = () => {
             ...addTodo,
           }
         ]);
-        console.log("Todo: ", addTodo)
       } catch ( err ) {
         restore();
         throw err;

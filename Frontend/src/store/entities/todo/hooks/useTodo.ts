@@ -28,6 +28,7 @@ export const useTodo = (todoId: string) => {
           },
         },
       });
+      console.log("RESPONSE: ",res.data?.updateTodo)
       if (res.errors) upsert(prev)
     },
   [

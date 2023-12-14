@@ -4,19 +4,15 @@ import { CurrentUser } from "..";
 
 export const useUpsert = () => {
     const upsert = useRecoilCallback(
-        ({ set }) => 
-            (input: CurrentUser) => {
-                if (input != null && input.id != null) {
-                    // Use CurrentUser directly instead of State
-                    set(userState(input.id), input);
-                } else {
-                    console.warn("Attempted to upsert a null or undefined user.");
-                }
-            },
-        []
-    );
-
+      ({ set }) =>
+        (user: CurrentUser) => {
+          set(userState, user)
+        },
+      [],
+    )
+  
     return {
-        upsert,
-    };
-};
+      upsert,
+    }
+  }
+  

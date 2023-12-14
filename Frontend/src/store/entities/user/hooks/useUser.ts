@@ -1,17 +1,22 @@
-import { useRecoilCallback } from "recoil";
+import { useRecoilCallback, useRecoilState } from "recoil";
 import { useUpsert } from "./useUpsert";
 import {
+  TodoFragmentFragment,
     useSignInUserMutation,
     useVerifyTokenLazyQuery,
 } from "../../../../graphql/types";
 import { CurrentUser, UserSignInType } from "../type";
+import { useTodoResponse } from "../../todo/hooks/useTodoResponse";
+import { userState } from "../atom";
+import { useUserResponse } from "./useUserResponse";
 
 export const useUser = () => {
 
   const { upsert } = useUpsert();
   const [signInUserMutation] = useSignInUserMutation();
   const [ verifyTokenQuery ] = useVerifyTokenLazyQuery();
-
+  const {setTodos} = useTodoResponse();
+  const [user] = useRecoilState(userState)
   const setUser = useRecoilCallback(
     () => async (input: UserSignInType) => {
       try {
@@ -23,6 +28,13 @@ export const useUser = () => {
 
         const usertoken: string | null = res.data?.signInUser?.token ?? null;
         const user: CurrentUser | null = res.data?.signInUser?.user ?? null;
+        
+        const todos = res.data?.signInUser?.user?.todos || []
+        if(todos.length > 0){
+          console.log(todos,"im here");
+          setTodos(todos as TodoFragmentFragment[])
+        }
+
 
         if ( usertoken ) {
           localStorage.setItem("token", usertoken);
@@ -60,6 +72,7 @@ export const useUser = () => {
   };  
 
   return {
+    user,
     setUser,
     getCurrentUser,
   };

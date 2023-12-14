@@ -1,3 +1,4 @@
+import { atom } from "recoil";
 import { CurrentUser } from ".";
 import { createState } from "../../utils/createState";
 
@@ -9,7 +10,10 @@ export const initialState = (): CurrentUser => ({
     email: "",
 });
 
-export const { state: userState } = createState({
-    key,
-    initialState,
-})
+
+
+export const userState = atom<CurrentUser>({
+    key: key('workspaceState'),
+    default: initialState(),
+  })
+  

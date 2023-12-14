@@ -1,5 +1,5 @@
 import React from 'react'
-import SignInCard from '../organisms/forms/SignInCard'
+import SignInCard from '../components/organisms/forms/SignInCard'
 
 const SignIn: React.FC = () => {
   return (

@@ -23,7 +23,7 @@ const InputButton: React.FC<Props> = ({
     }): React.JSX.Element => {
 
   return (
-    <div className='flex justify-between items-center gap-4'>
+    <div className='flex justify-center gap-4 w-full'>
         <Input 
             name={name}
             type={type}

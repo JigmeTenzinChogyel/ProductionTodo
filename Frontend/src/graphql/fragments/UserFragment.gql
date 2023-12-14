@@ -2,4 +2,7 @@ fragment UserFragment on User {
     id
     name
     email
+    todos{
+        ...TodoFragment
+    }
 }
