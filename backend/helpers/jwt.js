@@ -1,8 +1,6 @@
 const jwt = require("jsonwebtoken");
 
 const secret = process.env.JWT_SECRET;
-console.log("h",secret)
-
 
 const getTokenSecret = () => secret;
 

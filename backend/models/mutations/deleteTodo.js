@@ -1,12 +1,11 @@
 const graphql = require("graphql");
-const { GraphQLID } = graphql;
-const TodoType = require("../types/todoType.js");
-const { todos, users } = require("../../models");
+const { GraphQLID, GraphQLString } = graphql;
+const { todos } = require("../../models");
 const { combineResolvers } = require('graphql-resolvers');
 const isAuthenticated = require("../../helpers/authCombineResolvers.js");
 
 const deleteTodo = {
-    type: TodoType,
+    type: GraphQLString,
     args: {
         id: { type: GraphQLID }, // Assuming ID is passed to identify the todo
     },

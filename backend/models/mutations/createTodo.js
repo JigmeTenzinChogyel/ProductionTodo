@@ -8,8 +8,9 @@ const { combineResolvers } = require('graphql-resolvers')
 const createTodo = {
     type: TodoType,
     args: {
+        id: { type: GraphQLID},
         description: { type: GraphQLString },
-        user_id: { type: GraphQLID }, // Assuming user_id is passed along with description
+        user_id: { type: GraphQLID },
     },
     resolve: combineResolvers(isAuthenticated, async (parent, args) => {
         try {
@@ -23,6 +24,7 @@ const createTodo = {
             
             // Create a new todo with the provided description and associate it with the user
             const newTodo = await todos.create({
+                id: args.id,
                 description: args.description,
                 completion: false, // Assuming completion is false by default
                 userId: args.user_id,

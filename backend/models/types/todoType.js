@@ -1,13 +1,13 @@
 const graphql = require("graphql");
-const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLID, GraphQLBoolean, GraphQLNonNull } = graphql;
 
 const TodoType = new GraphQLObjectType({
   name: "Todo",
   fields: () => ({
-    id: { type: GraphQLID },
-    description: { type: GraphQLString },
-    completion: { type: GraphQLBoolean },
-    user_id: { type: GraphQLID},
+    id: { type: new GraphQLNonNull(GraphQLID)},
+    description: { type: new GraphQLNonNull(GraphQLString) },
+    completion: { type: new GraphQLNonNull(GraphQLBoolean) },
+    user_id: { type: new  GraphQLNonNull(GraphQLID)},
   }),
 });
 

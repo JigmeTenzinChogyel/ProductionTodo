@@ -11,6 +11,7 @@ const updateTodo = {
         id: { type: GraphQLID }, // ID of the todo to update
         description: { type: GraphQLString },
         completion: { type: GraphQLBoolean },
+        user_id: { type: GraphQLID },
     },
     resolve: combineResolvers(isAuthenticated, async (parent, args) => {
         try {
