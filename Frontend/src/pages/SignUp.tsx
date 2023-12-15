@@ -3,11 +3,9 @@ import Table from '../components/organisms/table/Table'
 import TableContent from "../components/organisms/table/TableContent";
 
 const tableHeaders = [
-  "Items",
-  "Order #",
-  "Amount",
-  "Status",
-  "Delivery Driver"
+  "Description",
+  "Due Date",
+  "Action",
 ];
 
 const SignUp: React.FC = () => {

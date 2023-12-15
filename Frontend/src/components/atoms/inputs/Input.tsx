@@ -6,10 +6,12 @@ interface Props {
     style?: string;
     placeholder?: string;
     value?: string;
+    checked?: boolean;
     onChange?(event: React.ChangeEvent<HTMLInputElement>): void; 
+    onFocus?: boolean;
 }
 
-const Input: React.FC<Props> = ({ name, type, style, placeholder, value, onChange }): React.JSX.Element => {
+const Input: React.FC<Props> = ({ name, type, style, placeholder, value, checked, onChange, onFocus }): React.JSX.Element => {
   return (
     <input 
         id={name}
@@ -17,8 +19,10 @@ const Input: React.FC<Props> = ({ name, type, style, placeholder, value, onChang
         className={style}
         type={type}
         value={value}
+        checked={checked}
         onChange={onChange}
         placeholder={placeholder}
+        onFocus={onFocus}
     />
   )
 }

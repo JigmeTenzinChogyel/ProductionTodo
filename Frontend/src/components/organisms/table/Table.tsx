@@ -69,7 +69,7 @@ const Table = ({ headers, minCellWidth, tableContent }) => {
   };
 
   return (
-    <div className="container">
+    <div className="table-container">
       <div className="table-wrapper">
         <table className="resizeable-table" ref={tableElement}>
           <thead>

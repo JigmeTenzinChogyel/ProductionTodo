@@ -26,12 +26,12 @@ export const useUser = () => {
 
         const usertoken: string | null = res.data?.signInUser?.token ?? null;
         const user: CurrentUser | null = res.data?.signInUser?.user ?? null;
-        
-        const todos = res.data?.signInUser?.user?.todos || []
+        const todos = res.data?.signInUser?.user?.todos || [];
+
         if(todos.length > 0){
-          console.log(todos,"im here");
           setTodos(todos as TodoFragmentFragment[])
         }
+        
         if ( usertoken ) {
           localStorage.setItem("token", usertoken);
           if (user) {

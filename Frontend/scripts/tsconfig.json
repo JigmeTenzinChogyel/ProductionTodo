@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "module": "CommonJS",
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "noEmit": true
+  },
+
+  "include": ["./graphql/**/*.ts", "./util/**/*.ts"]
+}

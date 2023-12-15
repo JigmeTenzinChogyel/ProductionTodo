@@ -6,9 +6,7 @@ type Result = {
     todoIds: string[]
 }
 export const useTodoIdsByUserId = (userId:string):Result => {
- 
   const todoIds = useRecoilValue(TodoIdsByUserIdState(userId))
-
   return {
     todoIds,
   }

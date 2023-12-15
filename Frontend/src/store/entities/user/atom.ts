@@ -9,10 +9,8 @@ export const initialState = (): CurrentUser => ({
     email: "",
 });
 
-
-
 export const userState = atom<CurrentUser>({
-    key: key('workspaceState'),
+    key: key('atomState'),
     default: initialState(),
   })
   
